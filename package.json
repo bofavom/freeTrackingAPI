@@ -1,0 +1,31 @@
+{
+  "name": "freetracking",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "clean": "rimraf ./dist",
+    "compile": "babel ./ -d dist --copy-files --ignore node_modules",
+    "build": "npm run clean && npm run compile",
+    "start": "NODE_ENV=production npm run build && node dist/server.js",
+    "dev": "NODE_ENV=development DEBUG=debug:* nodemon --exec babel-node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.0",
+    "debug": "^4.3.1",
+    "express": "^4.17.1",
+    "express-validator": "^6.7.0",
+    "mongoose": "^5.11.4",
+    "nconf": "^0.11.0",
+    "rimraf": "^3.0.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.9",
+    "@babel/node": "^7.12.6",
+    "@babel/plugin-transform-runtime": "^7.12.1",
+    "@babel/preset-env": "^7.12.7",
+    "nodemon": "^2.0.6"
+  }
+}

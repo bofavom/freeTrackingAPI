@@ -1,0 +1,9 @@
+{
+  "mongodb": {
+    "user": "",
+    "password": "",
+    "host": "",
+    "protocol": "",
+    "database": "freeTracking"
+  }
+}
