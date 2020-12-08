@@ -7,6 +7,7 @@ const tradeSchema = new mongoose.Schema({
   sellCurrency: String,
   feeAmount: Number,
   feeCurrenty: String,
+  exchange: String,
   date: Date
 })
 

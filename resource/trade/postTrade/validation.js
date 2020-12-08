@@ -7,5 +7,6 @@ export default [
   body('sellCurrency').exists(),
   body('feeAmount').exists(),
   body('feeCurrency').exists(),
+  body('exchange').exists(),
   body('datetime').exists(),
 ]

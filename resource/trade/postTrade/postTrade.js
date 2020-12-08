@@ -10,7 +10,7 @@ export default async (req, res, next) => {
   const { buyAmount, buyCurrency } = matchedData(req)
   const { sellAmount, sellCurrency } = matchedData(req)
   const { feeAmount, feeCurrency } = matchedData(req)
-  const { datetime } = matchedData(req)
+  const { exchange, datetime } = matchedData(req)
 
   const trade = new Trade({
     buyAmount: buyAmount,
@@ -19,6 +19,7 @@ export default async (req, res, next) => {
     sellCurrenty: sellCurrency,
     feeAmount: feeAmount,
     feeCurrenty: feeCurrency,
+    exchange: exchange,
     date: new Date(datetime)
   })
 
