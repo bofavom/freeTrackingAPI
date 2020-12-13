@@ -6,7 +6,7 @@ const tradeSchema = new mongoose.Schema({
   sellAmount: Number,
   sellCurrency: String,
   feeAmount: Number,
-  feeCurrenty: String,
+  feeCurrency: String,
   exchange: String,
   date: Date
 })
@@ -35,6 +35,8 @@ tradeSchema.statics.getBalance = function(currency) {
         amount: balance,
         currency: currency
       })
+    }).sort({ 
+      date: 1 
     })
   })
 }

@@ -8,7 +8,8 @@ export default (csv) => {
   
   for (let line of body) {
     const rows = line.split(',')
-    
+    if (!line.length > 0) continue
+
     result.push({
       buyAmount: normalize(rows[1]),
       buyCurrency: normalize(rows[2]),
