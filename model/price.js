@@ -10,6 +10,20 @@ const priceSchema = new mongoose.Schema({
   versionKey: false
 })
 
+priceSchema.statics.getCurrentPrice = function(pair) {
+  return new Promise((resolve, reject) => {
+    axios.get(
+      'https://api.kraken.com/0/public/Ticker', {
+        params: {
+          pair: pair
+        }
+      }
+    )
+    .then(result => resolve(Number(result.data.result[pair]['c'][0])))
+    .catch(err => reject(err))
+  })
+}
+
 priceSchema.statics.updatePrices = function(pair, interval, since = undefined) {
   return new Promise(async (resolve, reject) => {
     try {
