@@ -45,12 +45,12 @@ export default (csv) => {
     const sellAmountFee = fee.asset === sell.asset ? fee.fee : 0
 
     result.push({
-      buyAmount: Number(buy.amount) - Number(buyAmountFee),
+      buyAmount: Number((Number(buy.amount) - Number(buyAmountFee)).toFixed(8)),
       buyCurrency: normalizeCurrency(buy.asset),
-      sellAmount: Math.abs(Number(sell.amount)) + Number(sellAmountFee),
+      sellAmount: Number((Math.abs(Number(sell.amount)) + Number(sellAmountFee)).toFixed(8)),
       sellCurrency: normalizeCurrency(sell.asset),
-      feeAmount: fee.fee,
-      feeCurrency: normalizeCurrency(fee.asset),
+      feeAmount: Number(Number(fee.fee).toFixed(8)),
+      feeCurrency: Number(fee.fee) === 0 ? '' : normalizeCurrency(fee.asset),
       exchange: 'Kraken',
       date: new Date(buy.time)
     })

@@ -41,5 +41,24 @@ tradeSchema.statics.getBalance = function(currency) {
   })
 }
 
+tradeSchema.statics.checkDuplicates = function(newTrades) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const duplicates = []
+      const currentTrades = await mongoose.model('Trade').find({}, { _id: 0, __v: 0, date: 0 }).exec()
+
+      for (let newTrade of newTrades) {
+        delete newTrade.date
+        const duplicate = currentTrades.find(currentTrade => JSON.stringify(currentTrade) === JSON.stringify(newTrade))
+        if (duplicate) duplicates.push(duplicate)
+      }
+
+      resolve(duplicates)
+    } catch (err) {
+      reject(err)
+    }
+  })
+}
+
 const Trade = mongoose.model('Trade', tradeSchema)
 export default Trade

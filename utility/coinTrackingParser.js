@@ -11,11 +11,11 @@ export default (csv) => {
     if (!line.length > 0) continue
 
     result.push({
-      buyAmount: normalize(rows[1]),
+      buyAmount: Number(Number(normalize(rows[1])).toFixed(8)),
       buyCurrency: normalize(rows[2]),
-      sellAmount: normalize(rows[3]),
+      sellAmount: Number(Number(normalize(rows[3])).toFixed(8)),
       sellCurrency: normalize(rows[4]),
-      feeAmount: normalize(rows[5]),
+      feeAmount: Number(Number(normalize(rows[5])).toFixed(8)),
       feeCurrency: normalize(rows[6]),
       exchange: normalize(rows[7]),
       date: new Date(normalize(rows[10]))

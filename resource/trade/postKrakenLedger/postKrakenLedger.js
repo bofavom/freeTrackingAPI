@@ -11,10 +11,18 @@ export default async (req, res, next) => {
   const {  } = matchedData(req)
 
   if (!req.file || !req.file.buffer)
-  return res.status(422).json({error: 'Missing csv file'})
+  return res.status(422).json({error: 'Missing csv file.'})
 
   const csv = req.file.buffer.toString('utf8')
   const trades = krakenLedgerParser(csv)
+  const tradesCopy = JSON.parse(JSON.stringify(trades))
+
+  const duplicates = await Trade.checkDuplicates(tradesCopy)
+  if (duplicates.length > 0)
+  return res.status(422).json({
+    error: 'Possible entries already inserted. Import aborted.',
+    duplicates: duplicates
+  })
 
   return Trade.create(trades)
     .then(result => res.status(200).json(result))

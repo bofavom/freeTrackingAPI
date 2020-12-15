@@ -13,14 +13,24 @@ export default async (req, res, next) => {
   const { exchange, datetime } = matchedData(req)
 
   const trade = new Trade({
-    buyAmount: buyAmount,
+    buyAmount: Number(Number(buyAmount).toFixed(8)),
     buyCurrency: buyCurrency,
-    sellAmount: sellAmount,
-    sellCurrenty: sellCurrency,
-    feeAmount: feeAmount,
-    feeCurrenty: feeCurrency,
+    sellAmount: Number(Number(sellAmount).toFixed(8)),
+    sellCurrency: sellCurrency,
+    feeAmount: Number(Number(feeAmount).toFixed(8)),
+    feeCurrency: Number(feeAmount) === 0 ? '' : feeCurrency.toUpperCase(),
     exchange: exchange,
     date: new Date(datetime)
+  })
+
+  const tradeObject = trade.toObject()
+  delete tradeObject._id
+
+  const duplicates = await Trade.checkDuplicates([tradeObject])
+  if (duplicates.length > 0)
+  return res.status(422).json({
+    error: 'Possible entries already inserted. Import aborted.',
+    duplicates: duplicates
   })
 
   trade.save()
