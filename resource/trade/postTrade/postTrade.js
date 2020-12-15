@@ -14,12 +14,12 @@ export default async (req, res, next) => {
 
   const trade = new Trade({
     buyAmount: Number(Number(buyAmount).toFixed(8)),
-    buyCurrency: buyCurrency,
+    buyCurrency: buyCurrency.toUpperCase(),
     sellAmount: Number(Number(sellAmount).toFixed(8)),
-    sellCurrency: sellCurrency,
+    sellCurrency: sellCurrency.toUpperCase(),
     feeAmount: Number(Number(feeAmount).toFixed(8)),
     feeCurrency: Number(feeAmount) === 0 ? '' : feeCurrency.toUpperCase(),
-    exchange: exchange,
+    exchange: exchange.charAt(0).toUpperCase() + exchange.slice(1).toLowerCase(),
     date: new Date(datetime)
   })
 

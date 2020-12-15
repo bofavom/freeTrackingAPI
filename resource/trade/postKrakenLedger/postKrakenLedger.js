@@ -15,6 +15,10 @@ export default async (req, res, next) => {
 
   const csv = req.file.buffer.toString('utf8')
   const trades = krakenLedgerParser(csv)
+  if (!trades || trades.length === 0)
+  return res.status(404).json({
+    error: 'No valid entries found in the csv file.'
+  })
   const tradesCopy = JSON.parse(JSON.stringify(trades))
 
   const duplicates = await Trade.checkDuplicates(tradesCopy)
