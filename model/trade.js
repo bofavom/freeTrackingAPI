@@ -41,6 +41,33 @@ tradeSchema.statics.getBalance = function(currency) {
   })
 }
 
+tradeSchema.statics.getSpent = function(buyCurrency, sellCurrency) {
+  return new Promise((resolve, reject) => {
+    const query = {
+      $and: [
+        { sellCurrency: sellCurrency },
+        { buyCurrency: buyCurrency }
+      ]
+    }
+
+    mongoose.model('Trade').find(query, (err, res) => {
+      if (err) return reject(err)
+
+      let spent = 0
+      res.forEach(doc => {
+        spent -= doc.sellAmount
+      })
+
+      resolve({
+        amount: spent,
+        pair: `${buyCurrency}${sellCurrency}`
+      })
+    }).sort({
+      date: 1
+    })
+  })
+}
+
 tradeSchema.statics.checkDuplicates = function(newTrades) {
   return new Promise(async (resolve, reject) => {
     try {
