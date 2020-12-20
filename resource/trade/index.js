@@ -5,6 +5,7 @@ import postCoinTracking from './postCoinTracking'
 import postKrakenLedger from './postKrakenLedger'
 import currencyBalance from './currencyBalance'
 import spentByCurrency from './spentByCurrency'
+import trades from './trades'
 
 const router = express.Router()
 
@@ -13,5 +14,6 @@ router.post('/cointracking', postCoinTracking)
 router.post('/kraken', postKrakenLedger)
 router.get('/balance', currencyBalance)
 router.get('/spent', spentByCurrency)
+router.get('/', trades)
 
 export default router
